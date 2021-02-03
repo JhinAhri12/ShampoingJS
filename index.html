@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>ShampoingJs</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+  <link rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+
+<ion-app>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>ShampoingJs</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+  <center><button type="button" name="NG" onclick="Init()">new game</button>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div>
+          <h1>Player 1</h1>
+          <p id="globalj1">0</p>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div  id="un">
+         <img src="images/Un.png" alt="">
+        </div>
+        <div  id="deux">
+         <img src="images/Deux.png" alt="">
+        </div>
+        <div  id="trois">
+         <img src="images/Trois.png" alt="">
+        </div>
+        <div  id="quatre">
+         <img src="images/Quatre.png" alt="">
+        </div>
+        <div  id="cinq">
+         <img src="images/Cinq.png" alt="">
+        </div>
+        <div  id="six">
+         <img src="images/Six.png" alt="">
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          <h1>Player 2</h1>
+          <p id="globalj2">0</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row class="ion-align-items-start">
+      <ion-col>
+        <div>
+          <h2>Current</h2>
+          <p id="roundj1">0</p>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          <button type="button" name="RD" id="RD">Roll Dice</button>
+          <button type="button" name="HD" id="HD">Hold</button>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          <h2>Current</h2>
+          <p id="roundj2">0</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid></center>
+  </ion-content>
+</ion-app>
+<script src="script.js" type="text/javascript">
+
+
+</script>
+  </body>
+</html>
