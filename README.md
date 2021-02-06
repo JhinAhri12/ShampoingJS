@@ -1,1 +1,2 @@
 # ShampoingJS
+# ShampoingJS.github.io
