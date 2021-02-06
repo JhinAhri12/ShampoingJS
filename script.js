@@ -1,6 +1,11 @@
+$(document).ready(function(){
+
+// Variable désignant les boutons
 const buttonRD = document.getElementById('RD');
 const buttonHD = document.getElementById('HD');
+const buttonNG = document.getElementById('NG');
 
+// Variable désignant les dés
 let un = document.getElementById("un");
 let deux = document.getElementById("deux");
 let trois = document.getElementById("trois");
@@ -8,292 +13,215 @@ let quatre = document.getElementById("quatre");
 let cinq = document.getElementById("cinq");
 let six = document.getElementById("six");
 
-let round_j1 = document.getElementById("roundj1");
-let round_j2 = document.getElementById("roundj2");
-let global_j1 = document.getElementById("globalj1");
-let global_j2 = document.getElementById("globalj2");
+// Variable désignant les rounds ou globaux
+let roundJ1 = document.getElementById("roundj1");
+let roundJ2 = document.getElementById("roundj2");
+let globalJ1 = document.getElementById("globalj1");
+let globalJ2 = document.getElementById("globalj2");
 
-let j1_global = 0;
-let j2_global = 0;
-let j1_round = 0;
-let j2_round = 0;
+// initialisation des globaux et round
+let j1Global = 0;
+let j2Global = 0;
+let j1Round = 0;
+let j2Round = 0;
 
+
+// initialisation joueur et statut partie
 let joueur = 1;
-let tjoueur = 1;
+let statutPartie = false;
 
+/*
+Si on clique sur le bouton new game 
+*/
+$(buttonNG).click(function(){
+  Init();
+});
+
+/*
+Fonction qui commence le jeu en intilisant ou rénitialisant les variables.
+*/
 function Init()
 {
-  j1_global = 0;
-  j2_global = 0;
+  statutPartie = true;
 
-  j1_round = 0;
-  j2_round = 0;
+  joueur = 1;
+  tJoueur = 1;
+
+  $(roundJ1).text("0");
+  $(roundJ2).text("0");
+  $(globalJ1).text("0");
+  $(globalJ2).text("0");
 
   alert('Le joueur n°1 commence la partie !');
 }
 
-function Roll(){
-  let roll = Math.floor((Math.random() * 6) + 1);
-  return roll;
-}
-
-function Tour(lancer,joueur,tjoueur)
-{
-  if(joueur === 1 || tjoueur === 1)
+/*
+Si on clique sur le bouton roll on affiche le dé correspondant.
+Si il fait 1 il perd.
+Sinon on cumule son round.
+*/
+$(buttonRD).click(function(){
+  if(statutPartie)
   {
-    if(j1_global <= 100)
+    var lancer = Math.floor(Math.random() * 6) + 1;
+
+    un.style.display = "none";
+    deux.style.display = "none";
+    trois.style.display = "none";
+    quatre.style.display = "none";
+    cinq.style.display = "none";
+    six.style.display = "none";
+
+    if(lancer === 1)
     {
-      if(lancer !== 1)
+      un.style.display = "block";
+      if(joueur===1)
       {
-        j1_round += lancer;
-        round_j1.innerHTML = j1_round;
+        Perdre();
       }
-      else
+      else if(joueur===2)
       {
-        Perdre(round_j2,round_j1,joueur);
+        Perdre();
+      }
+    }
+    if(lancer === 2)
+    {
+      deux.style.display = "block";
+      if(joueur===1)
+      {
+        j1Round += lancer;
+        roundJ1.innerHTML = j1Round;
+      }
+      else if(joueur===2)
+      {
+        j2Round += lancer;
+        roundJ2.innerHTML = j2Round;
+      }
+    }
+    if(lancer === 3)
+    {
+      trois.style.display = "block";
+      if(joueur===1)
+      {
+        j1Round += lancer;
+        roundJ1.innerHTML = j1Round;
+      }
+      else if(joueur===2)
+      {
+        j2Round += lancer;
+        roundJ2.innerHTML = j2Round;
+      }
+    }
+    if(lancer === 4)
+    {
+      quatre.style.display = "block";
+      if(joueur===1)
+      {
+        j1Round += lancer;
+        roundJ1.innerHTML = j1Round;
+      }
+      else if(joueur===2)
+      {
+        j2Round += lancer;
+        roundJ2.innerHTML = j2Round;
+      }
+    }
+    if(lancer === 5)
+    {
+      cinq.style.display = "block";
+      if(joueur===1)
+      {
+        j1Round += lancer;
+        roundJ1.innerHTML = j1Round;
+      }
+      else if(joueur===2)
+      {
+        j2Round += lancer;
+        roundJ2.innerHTML = j2Round;
+      }
+    }
+    if(lancer === 6)
+    {
+      six.style.display = "block";
+      if(joueur===1)
+      {
+        j1Round += lancer;
+        roundJ1.innerHTML = j1Round;
+      }
+      else if(joueur===2)
+      {
+        j2Round += lancer;
+        roundJ2.innerHTML = j2Round;
       }
     }
   }
-  if(joueur === 2 || tjoueur === 2)
+  else
   {
-    if(j2_global <= 100)
-    {
-      if(lancer !== 1)
-      {
-        j2_round += lancer;
-        round_j2.innerHTML = j2_round;
-      }
-      else
-      {
-        Perdre(round_j2,round_j1,joueur);
-      }
-    }
+    alert('Veuillez commencer la partie avant de lancer les dés ');
   }
-
-  return {j1_global,j2_global,j1_round,j2_round,tjoueur}
-}
-
-function Perdre(round_j2,round_j1,joueur)
-{
-  round_j2.innerHTML = "0";
-  round_j1.innerHTML = "0";
-  if(joueur === 1)
-  {
-    tjoueur = 2;
-    alert("C'est au joueur 2 de jouer !");
-    j1_round = 0;
-  }
-  if(joueur === 2)
-  {
-    tjoueur = 1;
-    alert("C'est au joueur 1 de jouer !");
-    j2_round = 0;
-  }
-  console.log('test',tjoueur);
-  return tjoueur;
-}
-
-function Hold(j1_global,j2_global,j1_round,j2_round,joueur)
-{
-  round_j2.innerHTML = "0";
-  round_j1.innerHTML = "0";
-
-  if(joueur === 1)
-  {
-    j1_global += j1_round;
-    global_j1.innerHTML = j1_global;
-    j1_round = 0;
-    tjoueur = 2;
-    alert("C'est au joueur 2 de jouer !");
-  }
-
-  if(joueur === 2)
-  {
-    j2_global += j2_round;
-    global_j2.innerHTML = j2_global;
-    j2_round = 0;
-    tjoueur = 1;
-    alert("C'est au joueur 1 de jouer !");
-  }
-
-  return {j1_global,j2_global,tjoueur}
-}
-
-buttonRD.addEventListener('click', event => {
-
-  un.style.display = "none";
-  deux.style.display = "none";
-  trois.style.display = "none";
-  quatre.style.display = "none";
-  cinq.style.display = "none";
-  six.style.display = "none";
-
-  let lancer = Roll();
-
-  if(lancer === 1)
-  {
-    un.style.display = "block";
-  }
-  if(lancer === 2)
-  {
-    deux.style.display = "block";
-  }
-  if(lancer === 3)
-  {
-    trois.style.display = "block";
-  }
-  if(lancer === 4)
-  {
-    quatre.style.display = "block";
-  }
-  if(lancer === 5)
-  {
-    cinq.style.display = "block";
-  }
-  if(lancer === 6)
-  {
-    six.style.display = "block";
-  }
-
-  if(tjoueur === 1)
-  {
-    joueur = 1;console.log("tamer",j1_round,lancer);
-  }
-
-  if(tjoueur === 2)
-  {
-    joueur = 2;console.log("tonper",j2_round,lancer);
-  }
-
-  Tour(lancer,joueur,tjoueur);
-});
-
-buttonHD.addEventListener('click', event => {
-
-Hold(j1_global,j2_global,j1_round,j2_round,joueur);
-
 });
 
 
 /*
-const buttonRD = document.getElementById('RD');
-
-buttonRD.addEventListener('click', event => {
-
-  un.style.display = "none";
-  deux.style.display = "none";
-  trois.style.display = "none";
-  quatre.style.display = "none";
-  cinq.style.display = "none";
-  six.style.display = "none";
-
-  lancer = Roll();
-
-  if(lancer === 1)
+Si on clique sur le bouton hold on sauvegarde le score global !
+Si le score est supérieur ou égal a 100 le joueur a gagner
+*/
+$(buttonHD).click(function() {
+  if (statutPartie)
   {
-    un.style.display = "block";
-
-  }
-  if(lancer === 2)
-  {
-    deux.style.display = "block";
-
-  }
-  if(lancer === 3)
-  {
-    trois.style.display = "block";
-
-  }
-  if(lancer === 4)
-  {
-    quatre.style.display = "block";
-
-  }
-  if(lancer === 5)
-  {
-    cinq.style.display = "block";
-
-  }
-  if(lancer === 6)
-  {
-    six.style.display = "block";
-
-  }
-
-  if(j1_global <= 100)
-  {
-    if(joueur === 0)
+    if(joueur === 1)
     {
-      tjoueur = 0;
-      console.log(lancer,joueur,tjoueur,j1_round,j2_round);
-      if(lancer === 1)
+      j1Global += j1Round;
+      if(j1Global >= 100)
       {
-        j1.innerHTML = 0;
-        alert("C'est au tour du joueur 2");
-        joueur = 1;
-        tjoueur = 1 ;
-        delete lancer;
+        alert('Le joueur 1 a gagner la partie !');
+        Init();
       }
       else
       {
-        j1_round += lancer;
-        j1.innerHTML = j1_round;
-        j1_global += lancer;
+        $(globalJ1).text(j1Global);
+        Perdre();
       }
     }
-  }
-
-  if(j2_global <= 100){
-    if( joueur === 1)
+    else if(joueur === 2)
     {
-      tjoueur = 1;
-      console.log(lancer,joueur,tjoueur,j1_round,j2_round);
-      if(lancer === 1)
+      j2Global += j2Round;
+      if(j2Global >= 100)
       {
-        j2.innerHTML = 0;
-        alert("C'est au tour du joueur 1");
-        joueur = 0;
-        tjoueur = 0;
-        delete lancer;
+        alert('Le joueur 2 a gagner la partie !');
+        Init();
       }
       else
       {
-        j2_round += lancer;
-        j2.innerHTML = j2_round;
-        j2_global += lancer;
+        $(globalJ2).text(j2Global);
+        Perdre();
       }
     }
   }
+  else
+  {
+    alert('Veuillez commencer la partie avant de sauvegarder les scores de dés ');
+  }
+});
 
-
-  const button = document.getElementById('HD');
-
-  button.addEventListener('click', event => {
-
-  Hold();
-
-  });
-
-  function Hold(){
-    console.log(joueur,tjoueur,j1_round,j2_round);
-    if (tjoueur === 0){
-      gj1.innerHTML = j1_global
-      j1.innerHTML = 0;
-      joueur = 1;
-      alert("C'est au joueur 2 !");
-      delete tjoueur;
-      delete lancer;
+  /*
+  function pour remettre les socre à 0  et changer de joueur !
+  */
+  function Perdre()
+  {
+    if(joueur === 1)
+    {
+      j1Round = 0;
+      $(roundJ1).text(j1Round);
+      alert("C'est au joueur 2 de jouer");
     }
-    if (tjoueur === 1) {
-      gj2.innerHTML = j2_global;
-      j2.innerHTML = 0;
-      joueur = 0;
-      alert("C'est au joueur 1 !");
-      delete tjoueur;
-      delete lancer;
+    if(joueur === 2)
+    {
+      j2Round = 0;
+      $(roundJ2).text(j2Round);
+      alert("C'est au joueur 1 de jouer");
     }
+    joueur === 1 ? joueur = 2 : joueur = 1;
   }
 
-
-
-});*/
+});
