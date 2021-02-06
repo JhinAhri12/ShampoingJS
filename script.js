@@ -13,7 +13,7 @@ let quatre = document.getElementById("quatre");
 let cinq = document.getElementById("cinq");
 let six = document.getElementById("six");
 
-// Variable désignant les rounds ou globaux
+// Variable désignant les rounds ou globaux r
 let roundJ1 = document.getElementById("roundj1");
 let roundJ2 = document.getElementById("roundj2");
 let globalJ1 = document.getElementById("globalj1");
@@ -31,7 +31,7 @@ let joueur = 1;
 let statutPartie = false;
 
 /*
-Si on clique sur le bouton new game 
+Si on clique sur le bouton new game
 */
 $(buttonNG).click(function(){
   Init();
